@@ -1,8 +1,8 @@
 #!/usr/bin/env -S PATH="${PATH}:/usr/local/bin" python3
 from datetime import datetime
 
-from notionscripts.block_presenter import BlockPresenter
-from notionscripts.already_deleted_error import AlreadyDeletedError
+from scripts.notion.block_presenter import BlockPresenter
+from scripts.notion.already_deleted_error import AlreadyDeletedError
 
 from cachetools import cached
 

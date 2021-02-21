@@ -2,7 +2,7 @@
 
 from functools import wraps
 
-from notionscripts.notion_api import NotionApi
+from scripts.notion.notion_api import NotionApi
 from notion.collection import NotionDate
 
 from flask import Flask, request, jsonify
