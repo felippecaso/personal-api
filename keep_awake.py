@@ -4,5 +4,4 @@ import requests
 
 
 def ping():
-    # requests.get('https://felippe-notion-server.herokuapp.com/')
-    requests.get('http://127.0.0.1:8000/')
+    requests.get('https://felippe-personal-api.herokuapp.com/')
