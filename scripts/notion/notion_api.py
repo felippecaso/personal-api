@@ -10,7 +10,7 @@ from notion.client import NotionClient
 from notion.block import TextBlock
 
 
-class NotionApi():
+class NotionApi:
     def __init__(self, token):
         self.token = token
 
@@ -19,7 +19,9 @@ class NotionApi():
         return NotionClient(token_v2=self.token, monitor=False)
 
     def __collection_view(self, collection_id, view_id):
-        return self.client().get_collection_view(f"https://www.notion.so/{collection_id}?v={view_id}")
+        return self.client().get_collection_view(
+            f"https://www.notion.so/{collection_id}?v={view_id}"
+        )
 
     def block_content(self, block_id):
         block = self.client().get_block(block_id)
@@ -31,7 +33,7 @@ class NotionApi():
 
         return {
             "parent": BlockPresenter(block),
-            "children": [BlockPresenter(child) for child in block.children]
+            "children": [BlockPresenter(child) for child in block.children],
         }
 
     def block_append(self, block_id, data):
@@ -65,7 +67,7 @@ class NotionApi():
 
         return {
             "collection": BlockPresenter(collection_view),
-            "rows": [BlockPresenter(row) for row in results]
+            "rows": [BlockPresenter(row) for row in results],
         }
 
     def collection_append(self, collection_id, view_id, data):

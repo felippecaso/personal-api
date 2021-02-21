@@ -4,4 +4,4 @@ import requests
 
 
 def ping():
-    requests.get('https://felippe-personal-api.herokuapp.com/')
+    requests.get("https://felippe-personal-api.herokuapp.com/")

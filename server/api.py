@@ -8,6 +8,7 @@ from notion.collection import NotionDate
 from flask import Flask, request, jsonify
 from flask.json import JSONEncoder
 from flask_apscheduler import APScheduler
+
 app = Flask(__name__)
 
 
@@ -15,23 +16,25 @@ class MyJSONEncoder(JSONEncoder):
     def default(self, obj):
         if isinstance(obj, NotionDate):
             return {
-                'start': obj.start,
-                'end': obj.end,
-                'timezone': obj.timezone,
-                'reminder': obj.reminder,
+                "start": obj.start,
+                "end": obj.end,
+                "timezone": obj.timezone,
+                "reminder": obj.reminder,
             }
         return super(MyJSONEncoder, self).default(obj)
+
+
 app.json_encoder = MyJSONEncoder
 
 
 class JobConfig(object):
     JOBS = [
         {
-            'id': 'ping',
-            'func': 'keep_awake:ping',
-            'args': (),
-            'trigger': 'interval',
-            'seconds': 600
+            "id": "ping",
+            "func": "keep_awake:ping",
+            "args": (),
+            "trigger": "interval",
+            "seconds": 600,
         }
     ]
 
@@ -41,21 +44,25 @@ class JobConfig(object):
 def token_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'notion_token' in request.headers:
-            return f(request.headers['Notion-Token'], *args, **kwargs)
-        elif 'notion_token' in request.args:
-            return f(request.args['notion_token'], *args, **kwargs)
-        elif request.json is not None and 'notion_token' in request.json:
+        if "notion_token" in request.headers:
+            return f(request.headers["Notion-Token"], *args, **kwargs)
+        elif "notion_token" in request.args:
+            return f(request.args["notion_token"], *args, **kwargs)
+        elif request.json is not None and "notion_token" in request.json:
             # Popping the notion_token field as it would effect some of the
             # block updating as we use whole response for properties.
-            notion_token = request.json.pop('notion_token')
+            notion_token = request.json.pop("notion_token")
             return f(notion_token, *args, **kwargs)
         else:
-            return 'Request is missing `Notion-Token` header or `notion_token` in request body or `notion_token` in URL args.', 401
+            return (
+                "Request is missing `Notion-Token` header or other auth forms.",
+                401,
+            )
+
     return decorated_function
 
 
-@app.route('/notion/blocks/<block_id>/children', methods=['POST'])
+@app.route("/notion/blocks/<block_id>/children", methods=["POST"])
 @token_required
 def block_children_append(notion_token, block_id):
     try:
@@ -68,7 +75,7 @@ def block_children_append(notion_token, block_id):
         return jsonify(error=str(error)), 500
 
 
-@app.route('/notion/blocks/<block_id>', methods=['PUT'])
+@app.route("/notion/blocks/<block_id>", methods=["PUT"])
 @token_required
 def block_update(notion_token, block_id):
     try:
@@ -81,7 +88,7 @@ def block_update(notion_token, block_id):
         return jsonify(error=str(error)), 500
 
 
-@app.route('/notion/blocks/<block_id>', methods=['DELETE'])
+@app.route("/notion/blocks/<block_id>", methods=["DELETE"])
 @token_required
 def block_delete(notion_token, block_id):
     try:
@@ -94,7 +101,7 @@ def block_delete(notion_token, block_id):
         return jsonify(error=str(error)), 500
 
 
-@app.route('/notion/blocks/<block_id>', methods=['GET'])
+@app.route("/notion/blocks/<block_id>", methods=["GET"])
 @token_required
 def block_view(notion_token, block_id):
     try:
@@ -107,7 +114,7 @@ def block_view(notion_token, block_id):
         return jsonify(error=str(error)), 500
 
 
-@app.route('/notion/blocks/<block_id>/children', methods=['GET'])
+@app.route("/notion/blocks/<block_id>/children", methods=["GET"])
 @token_required
 def block_children_view(notion_token, block_id):
     try:
@@ -120,7 +127,7 @@ def block_children_view(notion_token, block_id):
         return jsonify(error=str(error)), 500
 
 
-@app.route('/notion/collections/<collection_id>/<view_id>', methods=['POST'])
+@app.route("/notion/collections/<collection_id>/<view_id>", methods=["POST"])
 @token_required
 def collection_append(notion_token, collection_id, view_id):
     try:
@@ -133,7 +140,7 @@ def collection_append(notion_token, collection_id, view_id):
         return jsonify(error=str(error)), 500
 
 
-@app.route('/notion/collections/<collection_id>/<view_id>', methods=['GET'])
+@app.route("/notion/collections/<collection_id>/<view_id>", methods=["GET"])
 @token_required
 def collection_view(notion_token, collection_id, view_id):
     try:
