@@ -1,4 +1,6 @@
 #!/usr/bin/env -S PATH="${PATH}:/usr/local/bin" python3
+from datetime import datetime
+
 from notionscripts.block_presenter import BlockPresenter
 from notionscripts.already_deleted_error import AlreadyDeletedError
 
@@ -69,6 +71,11 @@ class NotionApi():
     def collection_append(self, collection_id, view_id, data):
         collection_view = self.__collection_view(collection_id, view_id)
 
-        row = collection_view.collection.add_row(**data)
+        row = collection_view.collection.add_row()
+        for k, v in data.items():
+            if row.collection.get_schema_property(k)["type"] == "date":
+                row.set_property(k, datetime.strptime(v, "%Y-%m-%d").date())
+            else:
+                row.set_property(k, v)
 
         return BlockPresenter(row)
