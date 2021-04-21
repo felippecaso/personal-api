@@ -6,8 +6,8 @@ from scripts.notion.already_deleted_error import AlreadyDeletedError
 
 from cachetools import cached
 
-from notion.client import NotionClient
-from notion.block import TextBlock
+from scripts.notion.notion-py.client import NotionClient
+from scripts.notion.notion-py.block import TextBlock
 
 
 class NotionApi:

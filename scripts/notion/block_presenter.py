@@ -1,7 +1,7 @@
 #!/usr/bin/env -S PATH="${PATH}:/usr/local/bin" python3
 
-from notion.collection import CollectionRowBlock, CollectionView
-from notion.block import DividerBlock
+from scripts.notion.notion-py.collection import CollectionRowBlock, CollectionView
+from scripts.notion.notion-py.block import DividerBlock
 
 
 class BlockPresenter(dict):

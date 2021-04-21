@@ -3,7 +3,7 @@ from scripts.notion.already_deleted_error import AlreadyDeletedError
 
 from .notion_api_page_helper import get_test_page, create_collection_view
 
-from notion.block import TextBlock
+from scripts.notion.notion-py.block import TextBlock
 
 import pytest  # noqa, F401
 
