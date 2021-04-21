@@ -1,8 +1,8 @@
 import pytest
 
 from datetime import datetime
-from scripts.notion.notion-py.client import NotionClient
-from scripts.notion.notion-py.block import PageBlock, CollectionViewBlock
+from scripts.notion.notion_py.client import NotionClient
+from scripts.notion.notion_py.block import PageBlock, CollectionViewBlock
 
 # Some parts of this file are inspired/using the code from notion-py
 # https://github.com/jamalex/notion-py/blob/b7041ade477c1f59edab1b6fc025326d406dd92a/notion/smoke_test.py

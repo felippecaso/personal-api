@@ -5,7 +5,7 @@ from scripts.notion.block_presenter import BlockPresenter
 
 from .notion_api_page_helper import get_test_page, create_collection_view
 
-from scripts.notion.notion-py.block import TextBlock, DividerBlock
+from scripts.notion.notion_py.block import TextBlock, DividerBlock
 
 import json
 
