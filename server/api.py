@@ -21,7 +21,7 @@ class MyJSONEncoder(JSONEncoder):
                 "timezone": obj.timezone,
                 "reminder": obj.reminder,
             }
-        return JSONEncoder.default(self, obj)
+        return super(MyJSONEncoder, self).default(obj)
 
 
 app.json_encoder = MyJSONEncoder
