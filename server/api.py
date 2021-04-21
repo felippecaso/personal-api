@@ -3,7 +3,7 @@
 from functools import wraps
 
 from scripts.notion.notion_api import NotionApi
-from notion.collection import NotionDate
+from scripts.notion.notion_py.collection import NotionDate
 
 from flask import Flask, request, jsonify
 from flask.json import JSONEncoder
@@ -21,7 +21,7 @@ class MyJSONEncoder(JSONEncoder):
                 "timezone": obj.timezone,
                 "reminder": obj.reminder,
             }
-        return super(MyJSONEncoder, self).default(obj)
+        return JSONEncoder.default(self, obj)
 
 
 app.json_encoder = MyJSONEncoder
